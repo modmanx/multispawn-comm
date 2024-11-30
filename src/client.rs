@@ -1,4 +1,6 @@
-use tokio::{select, sync::mpsc::UnboundedSender};
+use std::time::Duration;
+
+use tokio::{select, sync::mpsc::UnboundedSender, time::sleep};
 use tokio_util::sync::CancellationToken;
 
 use crate::data::Packet;
@@ -16,6 +18,7 @@ impl Client {
         println!("running client");
         let token1 = self.token.clone();
         let s1 = self.s.clone();
+        sleep(Duration::from_secs(1)).await;
         let t1 = tokio::spawn(async move {
             loop {
                 select! {
